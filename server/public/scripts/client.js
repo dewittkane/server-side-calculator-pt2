@@ -1,20 +1,22 @@
 $(document).ready(function(){
-    console.log('js and jq loaded!');
-    
     $('#equalsBtn').on('click', postCalc);
-    
+    $('#clearBtn').on('click', clearInputs);
     //click listeners
 
-
+    getAndAppendPreviousCalcs();
+    //shows previous calcs on refresh/page load
 
     function postCalc(){
         let newCalculation = {
             firstNum: $('#numOneIn').val(),
             operator: $('#operators').val(),
             secondNum: $('#numTwoIn').val()
-        };
+        };//collects values from inputs
+
         console.log(newCalculation);
         if (newCalculation.firstNum !== '' && newCalculation.secondNum !== '') {
+            //this will catch having an empty input
+
             if (newCalculation.operator === '/' && newCalculation.secondNum === '0'){
                 alert("You can't divide by zero! Please enter a valid second number to get CALCULATING.");
                 return false;     
@@ -26,25 +28,26 @@ $(document).ready(function(){
                 data: newCalculation
             }).then(function(response){
                 console.log('coming back from post');
-                getLastCalc(response);
-                getPreviousCalcs()
+                appendLastCalc(response);
+                getAndAppendPreviousCalcs()
             });//ajax sends new calculation to server and comes back with most recent calculation
+                //instead of sending back a status i just sent back the most recent calculation, is this allowed?!
 
         } else {
             alert('Please enter both number fields to get CALCULATING.');
             return false;
-        };//this will catch having an empty input
+        };//response if there's an empty input
         
     };
 
 
-    function getLastCalc(lastCalculationObject) {
+    function appendLastCalc(lastCalculationObject) {
         $('#lastCalc').empty();
         $('#lastCalc').append(`${lastCalculationObject.firstNum} ${lastCalculationObject.operator} ${lastCalculationObject.secondNum} = ${lastCalculationObject.result}
         `)
     };//clears and appends last calculation area
 
-    function getPreviousCalcs() {
+    function getAndAppendPreviousCalcs() {
         $('#previousCalcs').empty();
         $.ajax({
             method:'get',
@@ -54,11 +57,12 @@ $(document).ready(function(){
                 $('#previousCalcs').append(`
                 <li>${calculation.firstNum} ${calculation.operator} ${calculation.secondNum} = ${calculation.result}</li>
                 `)
-            }
-        })
-        
-    }
+            };
+        });//gets previous calculations array then loops and appends each one
+    };
 
-
-
+    function clearInputs() {
+        $('#numOneIn').val('');
+        $('#numTwoIn').val('');
+    };//clears number inputs
 });
