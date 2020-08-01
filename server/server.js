@@ -9,16 +9,20 @@ app.listen(port, () => {
 });
 //server boilerplate
 
-let previousCalculation = [];
+let previousCalculations = [];
 
 app.post('/calculations', (req, res) => {
     let calculationIn = req.body;
     console.log('in server.js, pre calculation', calculationIn);
     let calculationOut = calculate(calculationIn);
     console.log('in server.js, post calculation', calculationOut);
+    previousCalculations.push(calculationOut);
     res.send(calculationOut);
-    
-})
+});
+
+app.get('/calculations', (req, res) => {
+    res.send(previousCalculations)
+});
 
 function calculate(calculationObject){
     if (calculationObject.operator === '+') {
@@ -34,4 +38,4 @@ function calculate(calculationObject){
         calculationObject.result = parseFloat(calculationObject.firstNum) / parseFloat(calculationObject.secondNum)
         return calculationObject;
     }
-}
+};
