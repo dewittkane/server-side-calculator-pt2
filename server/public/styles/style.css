@@ -7,7 +7,8 @@ h3 {
     text-decoration: underline;
 }
 input {
-    width: 40px;
+    width: 102px;
+    margin: 3px;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -21,7 +22,16 @@ input[type=number] {
     -moz-appearance: textfield;
   }
 
-  #equalsBtn {
-      width: 30px;
-      height: 30px;
-  }
+button {
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+}
+
+#calculator {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid teal;
+    border-radius: 10px;
+    background-color: lightgrey;
+}

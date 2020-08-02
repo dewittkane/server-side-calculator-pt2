@@ -10,18 +10,32 @@
 </head>
 <body>
     <header>
+        
         <h1>GET CALCULATING</h1>
-        <input type="number" id="numOneIn"/>
-        <select name="operators" id="operators">
-            <option value="+">+</option>
-            <option value="-">-</option>
-            <option value="*">*</option>
-            <option value="/">/</option>
-        </select> 
-        <!-- The buttons seemed inefficient to me, so I opted for this option. -->
-        <input type="number" id="numTwoIn"/>
-        <button id="equalsBtn">=</button>
-        <button id="clearBtn">C</button>
+        <div id="calculator">
+            <input type="text" id="entryField"/>
+            <button id="clearBtn">C</button>
+            <br>
+            <button id="numSeven">7</button>
+            <button id="numEight">8</button>
+            <button id="numNine">9</button>
+            <button id="operPlus">+</button>
+            <br>
+            <button id="numFour">4</button>
+            <button id="numFive">5</button>
+            <button id="numSix">6</button>
+            <button id="operMinus">-</button>
+            <br>
+            <button id="numOne">1</button>
+            <button id="numTwo">2</button>
+            <button id="numThree">3</button>
+            <button id="operMult">x</button>
+            <br>
+            <button id="numZero">0</button>
+            <button id="periodBtn">.</button>
+            <button id="equalsBtn">=</button>
+            <button id="operDiv">/</button>
+        </div>
     </header>
     <main>
         <h3>Your Result</h3>
