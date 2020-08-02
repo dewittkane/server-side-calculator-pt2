@@ -37,7 +37,7 @@ input[type=number] {
     -moz-appearance: textfield;
   }
 
-button {
+.numBtn, .operBtn, #periodBtn, #equalsBtn {
     width: 45px;
     height: 45px;
     margin: 5px;
@@ -58,6 +58,9 @@ button {
 }
 
 #cBtn, #acBtn {
+    width: 45px;
+    height: 45px;
+    margin: 5px;
     font-size: 20px;
 }
 

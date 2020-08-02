@@ -5,6 +5,7 @@ $(document).ready(function(){
     $('.numBtn').on('click', addNumToField);
     $('#periodBtn').on('click', addPeriodToField);
     $('.operBtn').on('click', processOperator);
+    $('#clearCalcs').on('click', clearHistory);
     // //click listeners
 
     getAndAppendPreviousCalcs();
@@ -77,7 +78,7 @@ $(document).ready(function(){
         clearCurrentCalc();
         clearInput();
 
-    };
+    };//runs the whole calculation
     
     function postCalc(calculationObjectToPost){
         $.ajax({
@@ -136,9 +137,25 @@ $(document).ready(function(){
     function toggleACOn(){
         $('#clearButtonSpot').empty();
         $('#clearButtonSpot').append(`<button id="acBtn">AC</button>`)
-    };
+    };//toggles the AC button on
     function toggleACOff(){
         $('#clearButtonSpot').empty();
         $('#clearButtonSpot').append(`<button id="cBtn">C</button>`)
-    };
+    };//toggles the clear button on
+
+    function clearHistory(){
+        let response = prompt(`Please type 'DELETE' to confirm you want to clear the database.  Warning: This cannot be undone.`);
+        if (response === 'DELETE') {
+            $.ajax({
+                method : 'delete',
+                url: '/calculations'
+            }).then(function(response){
+                getAndAppendPreviousCalcs();
+                $('#lastCalc').empty();
+                $('#lastCalc').append(`<br>`)
+            })
+        } else {
+            alert("I'm glad you changed your mind...");
+        }
+    }
 });
