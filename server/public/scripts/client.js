@@ -3,10 +3,14 @@ $(document).ready(function(){
     $('#clearBtn').on('click', clearInput);
     $('.numBtn').on('click', addNumToField);
     $('#periodBtn').on('click', addPeriodToField);
+    $('.operBtn').on('click', operateField)
     // //click listeners
 
     // getAndAppendPreviousCalcs();
     // //shows previous calcs on refresh/page load
+
+    let currentCalculation = [];
+    //empty array to store the current calculation
 
     function addNumToField(){
         $('#entryField').val($('#entryField').val() + $(this).text());
@@ -20,6 +24,25 @@ $(document).ready(function(){
             alert("You can't add another decimal if you already have one! MATH!");
         };
     }//Prevents you from trying to use the calculator to write dewey decimal system
+
+    function operateField(){
+
+        let calculationStep = {
+            number: $('#entryField').val(),
+            operator: $(this).text()
+        };
+        currentCalculation.push(calculationStep);
+        console.log(currentCalculation);
+        
+        $('#currCalc').append(`${calculationStep.number} ${calculationStep.operator} `);
+        clearInput();
+
+        if(currentCalculation.length === 2) {
+            calculatePartial();
+        }
+    }//stores calculation in steps allowing for compound calculations
+
+    
 
 
     // function postCalc(){
