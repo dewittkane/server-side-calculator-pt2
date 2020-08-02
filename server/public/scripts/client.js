@@ -1,13 +1,13 @@
 $(document).ready(function(){
-    // $('#equalsBtn').on('click', postCalc);
+    $('#equalsBtn').on('click', processEquals);
     $('#clearBtn').on('click', clearInput);
     $('.numBtn').on('click', addNumToField);
     $('#periodBtn').on('click', addPeriodToField);
-    $('.operBtn').on('click', operateField)
+    $('.operBtn').on('click', processOperator);
     // //click listeners
 
-    // getAndAppendPreviousCalcs();
-    // //shows previous calcs on refresh/page load
+    getAndAppendPreviousCalcs();
+    //shows previous calcs on refresh/page load
 
     let currentCalculation = [];
     //empty array to store the current calculation
@@ -25,52 +25,69 @@ $(document).ready(function(){
         };
     }//Prevents you from trying to use the calculator to write dewey decimal system
 
-    function operateField(){
+    function processOperator(){
         if (currentCalculation.length === 1) {
             alert("This calculator isn't that advanced... One step at a time please.")
             return false
         };//prevents multiple operators
 
         let calculationStep = {
-            numberOne: $('#entryField').val(),
+            firstNum: $('#entryField').val(),
             operator: $(this).text()
         };//gathers current step of calculation
 
-        if(calculationStep.number === '') {
+        if(calculationStep.firstNum === '') {
             alert(`Please enter a number to "${calculationStep.operator}". MATH!`)
             return false
         }//stops if input field is empty
+        
 
-        if(amIDividingByZero(calculationStep) === true){
-            alert('You cannot divide by zero! MATH!')
-            clearInput();
-            return false
-        };//stops if dividing by zero
+
 
         currentCalculation.push(calculationStep);
         console.log(currentCalculation);
         //pushes to array storing the current calculation
         
-        $('#currCalc').append(`${calculationStep.numberOne} ${calculationStep.operator} `);
+        $('#currCalc').append(`${calculationStep.firstNum} ${calculationStep.operator} `);
         clearInput();
     };
 
+    function processEquals(){
+        let objectToPost = currentCalculation[0];
+        let secondNum = $('#entryField').val()
 
-    function postCalc(){
-        console.log(currentCalculation);
+        if(secondNum === '') {
+            alert(`Please enter a number to "${objectToPost.operator}". MATH!`)
+            return false
+        }//stops if input field is empty
+
+        if(amIDividingByZero(secondNum) === true){
+            alert('You cannot divide by zero! MATH!')
+            clearInput();
+            return false
+        };//stops if dividing by zero THIS NEEDS TO MOVE
+
+        objectToPost.secondNum = secondNum;
+        console.log(currentCalculation[0]);
+        //assigns second number to object
         
+        postCalc(objectToPost);
+
+    };
+    
+    function postCalc(calculationObjectToPost){
         $.ajax({
             method: 'post',
             url: '/calculateme',
-            data: currentCalculation
+            data: calculationObjectToPost
         }).then(function(response){
-
+            getAndAppendPreviousCalcs();
         });
     };//posts current calculation to the server
 
-    function amIDividingByZero(calculationStep){
+    function amIDividingByZero(secondNum){
         if(currentCalculation.length === 1) {
-            if(currentCalculation[0].operator === '/' && calculationStep.number == 0) {
+            if(currentCalculation[0].operator === '/' && secondNum == 0) {
             return true;
         }};//checks if you're dividing by zero
     };
@@ -115,19 +132,20 @@ $(document).ready(function(){
     //     `)
     // };//clears and appends last calculation area
 
-    // function getAndAppendPreviousCalcs() {
-    //     $('#previousCalcs').empty();
-    //     $.ajax({
-    //         method:'get',
-    //         url:'/calculations'
-    //     }).then(function(response){
-    //         for (const calculation of response) {
-    //             $('#previousCalcs').append(`
-    //             <li>${calculation.firstNum} ${calculation.operator} ${calculation.secondNum} = ${calculation.result}</li>
-    //             `)
-    //         };
-    //     });//gets previous calculations array then loops and appends each one
-    // };
+    function getAndAppendPreviousCalcs() {
+        console.log('APPENDING CALCS'); 
+        $('#previousCalcs').empty();
+        $.ajax({
+            method:'get',
+            url:'/calculations'
+        }).then(function(response){
+            for (const calculation of response) {
+                $('#previousCalcs').append(`
+                <li>${calculation.firstNum} ${calculation.operator} ${calculation.secondNum} = ${calculation.result}</li>
+                `)
+            };
+        });//gets previous calculations array then loops and appends each one
+    };
 
     function clearInput() {
         $('#entryField').val('');
