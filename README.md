@@ -7,9 +7,9 @@ This app is also built with data validation checks to ensure proper usage.  It w
 
 ## Screen Shots
 
-![Calculator Screenshot One](images/Server Side Calculator Screen Shot 1.png)
+![Calculator Screenshot One](images/ServerSideCalculatorScreenShot1.png)
 
-![Calculator Screenshot Two](images/Server Side Calculator Screen Shot 2.png)
+![Calculator Screenshot Two](images/ServerSideCalculatorScreenShot2.png)
 
 ## Built With
 
