@@ -26,25 +26,54 @@ $(document).ready(function(){
     }//Prevents you from trying to use the calculator to write dewey decimal system
 
     function operateField(){
+        if (currentCalculation.length === 1) {
+            alert("This calculator isn't that advanced... One step at a time please.")
+            return false
+        };//prevents multiple operators
 
         let calculationStep = {
-            number: $('#entryField').val(),
+            numberOne: $('#entryField').val(),
             operator: $(this).text()
-        };
+        };//gathers current step of calculation
+
+        if(calculationStep.number === '') {
+            alert(`Please enter a number to "${calculationStep.operator}". MATH!`)
+            return false
+        }//stops if input field is empty
+
+        if(amIDividingByZero(calculationStep) === true){
+            alert('You cannot divide by zero! MATH!')
+            clearInput();
+            return false
+        };//stops if dividing by zero
+
         currentCalculation.push(calculationStep);
         console.log(currentCalculation);
+        //pushes to array storing the current calculation
         
-        $('#currCalc').append(`${calculationStep.number} ${calculationStep.operator} `);
+        $('#currCalc').append(`${calculationStep.numberOne} ${calculationStep.operator} `);
         clearInput();
-
-        if(currentCalculation.length === 2) {
-            calculatePartial();
-        }
-    }//stores calculation in steps allowing for compound calculations
-
-    
+    };
 
 
+    function postCalc(){
+        console.log(currentCalculation);
+        
+        $.ajax({
+            method: 'post',
+            url: '/calculateme',
+            data: currentCalculation
+        }).then(function(response){
+
+        });
+    };//posts current calculation to the server
+
+    function amIDividingByZero(calculationStep){
+        if(currentCalculation.length === 1) {
+            if(currentCalculation[0].operator === '/' && calculationStep.number == 0) {
+            return true;
+        }};//checks if you're dividing by zero
+    };
     // function postCalc(){
     //     let newCalculation = {
     //         firstNum: $('#numOneIn').val(),

@@ -11,31 +11,31 @@ app.listen(port, () => {
 
 let previousCalculations = [];
 
-app.post('/calculations', (req, res) => {
+app.post('/calculateme', (req, res) => {
     let calculationIn = req.body;
     console.log('in server.js, pre calculation', calculationIn);
-    let calculationOut = calculate(calculationIn);
-    console.log('in server.js, post calculation', calculationOut);
-    previousCalculations.push(calculationOut);
-    res.send(calculationOut);
+    //let calculationOut = calculate(calculationIn);
+    //console.log('in server.js, post calculation', calculationOut);
+    //previousCalculations.push(calculationOut);
+    res.sendStatus(201);
 });
 
 app.get('/calculations', (req, res) => {
     res.send(previousCalculations)
 });
 
-function calculate(calculationObject){
-    if (calculationObject.operator === '+') {
-        calculationObject.result = parseFloat(calculationObject.firstNum) + parseFloat(calculationObject.secondNum)
-        return calculationObject;
-    } else if (calculationObject.operator === '-') {
-        calculationObject.result = parseFloat(calculationObject.firstNum) - parseFloat(calculationObject.secondNum)
-        return calculationObject;
-    } else if (calculationObject.operator === '*') {
-        calculationObject.result = parseFloat(calculationObject.firstNum) * parseFloat(calculationObject.secondNum)
-        return calculationObject;
-    } else if (calculationObject.operator === '/') {
-        calculationObject.result = parseFloat(calculationObject.firstNum) / parseFloat(calculationObject.secondNum)
-        return calculationObject;
-    }
-};
+// function calculate(calculationObject){
+//     if (calculationObject.operator === '+') {
+//         calculationObject.result = parseFloat(calculationObject.firstNum) + parseFloat(calculationObject.secondNum)
+//         return calculationObject;
+//     } else if (calculationObject.operator === '-') {
+//         calculationObject.result = parseFloat(calculationObject.firstNum) - parseFloat(calculationObject.secondNum)
+//         return calculationObject;
+//     } else if (calculationObject.operator === '*') {
+//         calculationObject.result = parseFloat(calculationObject.firstNum) * parseFloat(calculationObject.secondNum)
+//         return calculationObject;
+//     } else if (calculationObject.operator === '/') {
+//         calculationObject.result = parseFloat(calculationObject.firstNum) / parseFloat(calculationObject.secondNum)
+//         return calculationObject;
+//     }
+// };
