@@ -13,8 +13,8 @@
         
         <h1>GET CALCULATING</h1>
         <div id="calculator">
-            <input type="text" id="entryField"/>
-            <div id="clearButtonSpot"><button id="cBtn">C</button></div>
+            <input type="text" id="entryField" onkeydown="return false"/>
+            <div id="clearButtonSpot"><button id="acBtn">AC</button></div>
             <br>
             <button class="numBtn" >7</button>
             <button class="numBtn" >8</button>
@@ -37,13 +37,12 @@
             <button class="operBtn">/</button>
         </div>
         <h3>Current Calculation:</h3>
-        <p id="currCalc"></p>
+        <p id="currCalc"><br></p>
     </header>
     <main>
-        <h3>Your Last Result</h3>
-        <div id="lastCalc">
-        </div>
-        <h3>Previous Calculations</h3>
+        <h3>Your Last Result:</h3>
+        <div id="lastCalc"><br></div>
+        <h3>Recent Calculations</h3>
         <ul id="previousCalcs"> 
         </ul>
     </main>

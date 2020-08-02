@@ -1,3 +1,8 @@
+@font-face {
+    font-family: calculator;
+    src: url(./Calculator.ttf)
+}
+
 h1 {
     color : teal;
 }
@@ -7,8 +12,18 @@ h3 {
     text-decoration: underline;
 }
 input {
-    width: 102px;
+    font-family: calculator;
+    padding: 1px;
+    width: 159px;
+    height: 30px;
     margin: 3px;
+    background-color: greenyellow;
+    font-size: 25px;
+    font-weight: 900;
+    border-style: groove;
+    border-width: 3px;
+    border-color: darkgray;
+    text-align: right;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -23,9 +38,10 @@ input[type=number] {
   }
 
 button {
-    width: 30px;
-    height: 30px;
-    margin: 3px;
+    width: 45px;
+    height: 45px;
+    margin: 5px;
+    font-size: 30px;
 }
 
 #calculator {
@@ -34,8 +50,18 @@ button {
     border: 2px solid teal;
     border-radius: 10px;
     background-color: lightgrey;
+    margin: 30px;
 }
 
 #clearButtonSpot {
     display: inline-block;
+}
+
+#cBtn, #acBtn {
+    font-size: 20px;
+}
+
+#lastCalc {
+    font-size: 18px;
+    font-weight: bold;
 }

@@ -48,7 +48,7 @@ $(document).ready(function(){
         console.log(currentCalculation);
         //pushes to array storing the current calculation
         
-        $('#currCalc').append(`${calculationStep.firstNum} ${calculationStep.operator} `);
+        $('#currCalc').text(`${calculationStep.firstNum} ${calculationStep.operator} `);
         //shows first step of calculation on the DOM
         clearInput();
         toggleACOn();
@@ -100,7 +100,7 @@ $(document).ready(function(){
 
     function appendLastCalc(lastCalculationObject) {
         $('#lastCalc').empty();
-        $('#lastCalc').append(`${lastCalculationObject.firstNum} ${lastCalculationObject.operator} ${lastCalculationObject.secondNum} = ${lastCalculationObject.result}
+        $('#lastCalc').append(`<p>${lastCalculationObject.firstNum} ${lastCalculationObject.operator} ${lastCalculationObject.secondNum} = ${lastCalculationObject.result}</p>
         `)
     };//clears and appends last calculation area
 
@@ -111,9 +111,11 @@ $(document).ready(function(){
             method:'get',
             url:'/calculations'
         }).then(function(response){
-            for (const calculation of response) {
+            console.log(response);
+            
+            for (let i = response.length - 1; i >= 0; i--) {
                 $('#previousCalcs').append(`
-                <li>${calculation.firstNum} ${calculation.operator} ${calculation.secondNum} = ${calculation.result}</li>
+                <li>${response[i].firstNum} ${response[i].operator} ${response[i].secondNum} = ${response[i].result}</li>
                 `)
             };
         });
@@ -123,6 +125,7 @@ $(document).ready(function(){
         currentCalculation = [];
         //resets the "workspace"
         $('#currCalc').empty();
+        $('#currCalc').append(`<br>`);
     };//clears the current calc portion of the page
 
     function clearInput() {
