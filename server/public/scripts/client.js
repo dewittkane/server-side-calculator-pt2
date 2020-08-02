@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $('#equalsBtn').on('click', processEquals);
-    $('#clearBtn').on('click', clearInput);
+    $('#clearButtonSpot').on('click', '#cBtn', clearInput);
+    $('#clearButtonSpot').on('click', '#acBtn', clearCurrentCalc);
     $('.numBtn').on('click', addNumToField);
     $('#periodBtn').on('click', addPeriodToField);
     $('.operBtn').on('click', processOperator);
@@ -14,6 +15,7 @@ $(document).ready(function(){
 
     function addNumToField(){
         $('#entryField').val($('#entryField').val() + $(this).text());
+        toggleACOff();
     }; //gets existing entry field value and adds the number you clicked on then sets the new value
 
     function addPeriodToField(){
@@ -23,6 +25,7 @@ $(document).ready(function(){
         } else {
             alert("You can't add another decimal if you already have one! MATH!");
         };
+        toggleACOff();
     }//Prevents you from trying to use the calculator to write dewey decimal system
 
     function processOperator(){
@@ -48,6 +51,7 @@ $(document).ready(function(){
         $('#currCalc').append(`${calculationStep.firstNum} ${calculationStep.operator} `);
         //shows first step of calculation on the DOM
         clearInput();
+        toggleACOn();
     };
 
     function processEquals(){
@@ -123,5 +127,15 @@ $(document).ready(function(){
 
     function clearInput() {
         $('#entryField').val('');
+        toggleACOn();
     };//clears number inputs
+
+    function toggleACOn(){
+        $('#clearButtonSpot').empty();
+        $('#clearButtonSpot').append(`<button id="acBtn">AC</button>`)
+    };
+    function toggleACOff(){
+        $('#clearButtonSpot').empty();
+        $('#clearButtonSpot').append(`<button id="cBtn">C</button>`)
+    };
 });

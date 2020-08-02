@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="vendors/jQuery.js"></script>
+    <script src="./vendors/jQuery.js"></script>
     <script src="./scripts/client.js"></script>
     <link href="./styles/style.css" rel="stylesheet"/>
     <title>Calculate It!</title>
@@ -14,7 +14,7 @@
         <h1>GET CALCULATING</h1>
         <div id="calculator">
             <input type="text" id="entryField"/>
-            <button id="clearBtn">C</button>
+            <div id="clearButtonSpot"><button id="cBtn">C</button></div>
             <br>
             <button class="numBtn" >7</button>
             <button class="numBtn" >8</button>
@@ -40,7 +40,7 @@
         <p id="currCalc"></p>
     </header>
     <main>
-        <h3>Your Result</h3>
+        <h3>Your Last Result</h3>
         <div id="lastCalc">
         </div>
         <h3>Previous Calculations</h3>
