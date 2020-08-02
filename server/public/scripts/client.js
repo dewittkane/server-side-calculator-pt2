@@ -40,15 +40,13 @@ $(document).ready(function(){
             alert(`Please enter a number to "${calculationStep.operator}". MATH!`)
             return false
         }//stops if input field is empty
-        
-
-
 
         currentCalculation.push(calculationStep);
         console.log(currentCalculation);
         //pushes to array storing the current calculation
         
         $('#currCalc').append(`${calculationStep.firstNum} ${calculationStep.operator} `);
+        //shows first step of calculation on the DOM
         clearInput();
     };
 
@@ -65,13 +63,15 @@ $(document).ready(function(){
             alert('You cannot divide by zero! MATH!')
             clearInput();
             return false
-        };//stops if dividing by zero THIS NEEDS TO MOVE
+        };//stops if dividing by zero
 
         objectToPost.secondNum = secondNum;
         console.log(currentCalculation[0]);
         //assigns second number to object
         
         postCalc(objectToPost);
+        clearCurrentCalc();
+        clearInput();
 
     };
     
@@ -82,6 +82,7 @@ $(document).ready(function(){
             data: calculationObjectToPost
         }).then(function(response){
             getAndAppendPreviousCalcs();
+            appendLastCalc(response);
         });
     };//posts current calculation to the server
 
@@ -91,46 +92,13 @@ $(document).ready(function(){
             return true;
         }};//checks if you're dividing by zero
     };
-    // function postCalc(){
-    //     let newCalculation = {
-    //         firstNum: $('#numOneIn').val(),
-    //         operator: $('#operators').val(),
-    //         secondNum: $('#numTwoIn').val()
-    //     };//collects values from inputs
-
-    //     console.log(newCalculation);
-    //     if (newCalculation.firstNum !== '' && newCalculation.secondNum !== '') {
-    //         //this will catch having an empty input
-
-    //         if (newCalculation.operator === '/' && newCalculation.secondNum === '0'){
-    //             alert("You can't divide by zero! Please enter a valid second number to get CALCULATING.");
-    //             return false;     
-    //         }; //This will catch trying to divide by zero
-        
-    //         $.ajax({
-    //             method: 'post',
-    //             url: '/calculations',
-    //             data: newCalculation
-    //         }).then(function(response){
-    //             console.log('coming back from post');
-    //             appendLastCalc(response);
-    //             getAndAppendPreviousCalcs()
-    //         });//ajax sends new calculation to server and comes back with most recent calculation
-    //             //instead of sending back a status i just sent back the most recent calculation, is this allowed?!
-
-    //     } else {
-    //         alert('Please enter both number fields to get CALCULATING.');
-    //         return false;
-    //     };//response if there's an empty input
-        
-    // };
 
 
-    // function appendLastCalc(lastCalculationObject) {
-    //     $('#lastCalc').empty();
-    //     $('#lastCalc').append(`${lastCalculationObject.firstNum} ${lastCalculationObject.operator} ${lastCalculationObject.secondNum} = ${lastCalculationObject.result}
-    //     `)
-    // };//clears and appends last calculation area
+    function appendLastCalc(lastCalculationObject) {
+        $('#lastCalc').empty();
+        $('#lastCalc').append(`${lastCalculationObject.firstNum} ${lastCalculationObject.operator} ${lastCalculationObject.secondNum} = ${lastCalculationObject.result}
+        `)
+    };//clears and appends last calculation area
 
     function getAndAppendPreviousCalcs() {
         console.log('APPENDING CALCS'); 
@@ -144,8 +112,14 @@ $(document).ready(function(){
                 <li>${calculation.firstNum} ${calculation.operator} ${calculation.secondNum} = ${calculation.result}</li>
                 `)
             };
-        });//gets previous calculations array then loops and appends each one
-    };
+        });
+    };//gets previous calculations array then loops and appends each one
+
+    function clearCurrentCalc() {
+        currentCalculation = [];
+        //resets the "workspace"
+        $('#currCalc').empty();
+    };//clears the current calc portion of the page
 
     function clearInput() {
         $('#entryField').val('');

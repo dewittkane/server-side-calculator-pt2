@@ -17,7 +17,7 @@ app.post('/calculateme', (req, res) => {
     let calculationOut = calculate(calculationIn);
     console.log('in server.js, post calculation', calculationOut);
     previousCalculations.push(calculationOut);
-    res.sendStatus(201);
+    res.send(calculationOut);
 });
 
 app.get('/calculations', (req, res) => {
