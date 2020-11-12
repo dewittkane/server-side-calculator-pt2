@@ -5,6 +5,8 @@ Our goal for this project was to develop a calculator that uses a server to stor
 
 This app is also built with data validation checks to ensure proper usage.  It will alert users if they are attempting to do something that the rules of MATH don't allow them to do (e.g. put multiple decimals, divide by zero).
 
+Deployed here: https://immense-journey-53836.herokuapp.com/
+
 ## Screen Shots
 
 ![Calculator Screenshot One](images/ServerSideCalculatorScreenShot1.png)
